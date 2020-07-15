@@ -174,6 +174,9 @@ class MainCategoriesController extends Controller
             unlink($image); //delete from folder
 
             $maincategory->delete();
+
+            //We need also to delete its translations
+            $maincategory->categories()->delete();
             return redirect()->route('admin.maincategories')->with(['success' => 'تم حذف القسم بنجاح']);
 
         } catch (\Exception $ex) {

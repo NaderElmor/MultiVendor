@@ -4,25 +4,27 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VendorRequest;
-use App\Models\MainCategory;
-use App\Models\Vendor;
+use App\Models\vendor;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\VendorCreated;
 use DB;
+use Illuminate\Support\Str;
+
 
 class VendorsController extends Controller
 {
 
 
+  
     public function index()
     {
-         $vendors = Vendor::selection()->paginate(PAGINATION_COUNT);
+        $vendors = Vendor::selection()->paginate(PAGINATION_COUNT);
         return view('admin.vendors.index', compact('vendors'));
     }
 
     public function create()
     {
-        $categories = MainCategory::where('translation_of', 0)->active()->get();
+        $categories = vendor::where('translation_of', 0)->active()->get();
         return view('admin.vendors.create', compact('categories'));
     }
 
@@ -73,7 +75,7 @@ class VendorsController extends Controller
             if (!$vendor)
                 return redirect()->route('admin.vendors')->with(['error' => 'هذا المتجر غير موجود او ربما يكون محذوفا ']);
 
-            $categories = MainCategory::where('translation_of', 0)->active()->get();
+            $categories = vendor::where('translation_of', 0)->active()->get();
 
             return view('admin.vendors.edit', compact('vendor', 'categories'));
 
@@ -133,11 +135,47 @@ class VendorsController extends Controller
     }
 
 
-
-    
-    public function changeStatus()
+    public function destroy($id)
     {
 
+        try {
+             $vendor = Vendor::find($id);
+            if (!$vendor)
+                return redirect()->route('admin.vendors')->with(['error' => 'هذا القسم غير موجود ']);
+
+    
+            $image = Str::after($vendor->logo, 'assets/');
+            $image = base_path('assets/' . $image);
+            unlink($image); //delete from folder
+
+            $vendor->delete();
+
+            return redirect()->route('admin.vendors')->with(['success' => 'تم حذف القسم بنجاح']);
+
+        } catch (\Exception $ex) {
+            return $ex;
+            return redirect()->route('admin.vendors')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
+    }
+
+
+
+    
+    public function changeStatus($id){
+        
+        try{
+            $vendor = Vendor::find($id);
+            if (!$vendor)
+                return redirect()->route('admin.vendors')->with(['error' => 'هذا التاجر غير موجود ']);
+
+                $status = $vendor->active == 0 ? 1 : 0;
+
+                $vendor->update(['active' => $status]);
+                return redirect()->route('admin.vendors')->with(['success' => 'تم تغيير الحالة بنجاح']);
+
+        }catch(\Exception $ex){
+            return redirect()->route('admin.vendors')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
     }
 
 
