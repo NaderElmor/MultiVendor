@@ -182,4 +182,23 @@ class MainCategoriesController extends Controller
     }
 
 
+    public function changeStatus($id){
+        
+        try{
+            $maincategory = MainCategory::find($id);
+            if (!$maincategory)
+                return redirect()->route('admin.maincategories')->with(['error' => 'هذا القسم غير موجود ']);
+
+                $status = $maincategory->active == 0 ? 1 : 0;
+
+                $maincategory->update(['active' => $status]);
+                return redirect()->route('admin.maincategories')->with(['success' => 'تم حذف القسم بنجاح']);
+
+        }catch(\Exception $ex){
+            return redirect()->route('admin.maincategories')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+
+        }
+    }
+
+
 }
