@@ -47,6 +47,8 @@
                                               method="POST"
                                               enctype="multipart/form-data">
                                             @csrf
+                                            <input type="hidden"  value="" id="latitude" name="latitude">
+                                            <input type="hidden" value="" id="longitude"  name="longitude">
                                             <div class="form-group">
                                                 <label> لوجو التجار </label>
                                                 <label id="projectinput7" class="file center-block">
@@ -90,8 +92,8 @@
                                                                     @endif
                                                                 </optgroup>
                                                             </select>
-                                                            @error('academy_id')
-                                                            <span class="text-danger"> {{$message}}</span>
+                                                            @error('category_id')
+                                                                <span class="text-danger"> {{$message}}</span>
                                                             @enderror
                                                         </div>
                                                     </div>
@@ -127,8 +129,23 @@
 
                                                 </div>
 
+                                                <div class="row">
+                                                    <div class="class col-12">
+                                                            <div class="form-group">
+                                                                <label for="projectinput1">كلمة المرور  </label>
+                                                                <input type="password" id="password"
+                                                                       class="form-control"
+                                                                       placeholder="  " name="password">
 
-                                                <di class="row">
+                                                                @error("password")
+                                                                <span class="text-danger"> {{$message}}</span>
+                                                                @enderror
+                                                            </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
                                                     <div class="col-md-6 ">
                                                         <div class="form-group">
                                                             <label for="projectinput1"> العنوان  </label>

@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/hi', function(){
-    return "hi";
-});
 
 
 define('PAGINATION_COUNT',10);
@@ -45,7 +42,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin'], function ()
         Route::post('store','MainCategoriesController@store') -> name('admin.maincategories.store');
         Route::get('edit/{id}','MainCategoriesController@edit') -> name('admin.maincategories.edit');
         Route::post('update/{id}','MainCategoriesController@update') -> name('admin.maincategories.update');
-        Route::get('delete/{id}','LanguagesController@destroy') -> name('admin.maincategories.delete');
+        Route::get('delete/{id}','MainCategoriesController@destroy') -> name('admin.maincategories.delete');
+        Route::get('changeStatus/{id}','MainCategoriesController@changeStatus') -> name('admin.maincategories.status');
     });
     ######################### End  Main Categoris Routes  ########################
 
@@ -57,7 +55,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin'], function ()
             Route::post('store','VendorsController@store') -> name('admin.vendors.store');
             Route::get('edit/{id}','VendorsController@edit') -> name('admin.vendors.edit');
             Route::post('update/{id}','VendorsController@update') -> name('admin.vendors.update');
-            Route::get('delete/{id}','VendorsController@destroy') -> name('admin.vendors.delete');
+            Route::get('delete/{id}','VendorsController@destroy') -> name('admin.vendors.destroy');
         });
         ######################### End  vendors Routes  ########################
 

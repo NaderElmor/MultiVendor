@@ -5,13 +5,13 @@
         <div class="content-wrapper">
             <div class="content-header row">
                 <div class="content-header-left col-md-6 col-12 mb-2">
-                    <h3 class="content-header-title"> التجار  </h3>
+                    <h3 class="content-header-title"> الاقسام الرئيسية </h3>
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">الرئيسية</a>
                                 </li>
-                                <li class="breadcrumb-item active"> التجار 
+                                <li class="breadcrumb-item active"> ألمتاجر
                                 </li>
                             </ol>
                         </div>
@@ -25,7 +25,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">التجار </h4>
+                                    <h4 class="card-title">جميع المتاجر </h4>
                                     <a class="heading-elements-toggle"><i
                                             class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
@@ -47,11 +47,11 @@
                                             class="table display nowrap table-striped table-bordered scroll-horizontal">
                                             <thead class="">
                                             <tr>
-                                                <th>اسم التاجر </th>
-                                                <th>الهاتف</th>
+                                                <th>الاسم</th>
                                                 <th> اللوجو</th>
-                                                 <th>القسم الرئيسي </th>
-                                                 <th>الحالة</th>
+                                                <th>الهاتف</th>
+                                                <th>القسم الرئيسي</th>
+                                                <th> ألحالة </th>
                                                 <th>الإجراءات</th>
                                             </tr>
                                             </thead>
@@ -60,21 +60,27 @@
                                             @isset($vendors)
                                                 @foreach($vendors as $vendor)
                                                     <tr>
-                                                        <td>{{$vendor->name}}</td>
-                                                        <td>{{$vendor->mobile}}</td>
-                                                        <td> <img style="width: 150px; height: 100px;" src="{{$vendor ->photo}}"></td>
-                                                        <td>{{$vendor->category}}</td>
-                                                        <td>{{$vendor->getActive()}}</td>
+                                                        <td>{{$vendor -> name}}</td>
+                                                        <td><img style="width: 150px; height: 100px;"
+                                                                 src="{{$vendor -> 	logo}}"></td>
+
+                                                        <td>{{$vendor -> mobile}}</td>
+                                                        <td> {{$vendor -> 	category -> name}}</td>
+
+                                                        <td> {{$vendor -> getActive()}}</td>
                                                         <td>
                                                             <div class="btn-group" role="group"
                                                                  aria-label="Basic example">
-                                                                <a href="{{route('admin.vendors.edit',$vendor->id)}}"class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
+                                                                <a href="{{route('admin.vendors.edit',$vendor -> id)}}"
+                                                                   class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
 
 
-                                                                <a href="{{route('admin.vendors.destroy',$vendor->id)}}" class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">حذف</a>
+                                                                <a href=""
+                                                                   class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">حذف</a>
 
 
-                                                                <a href="" class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">تفعيل</a>
+                                                                <a href=""
+                                                                   class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">تفعيل</a>
 
 
                                                             </div>

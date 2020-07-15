@@ -8,6 +8,7 @@ use App\Models\MainCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use DB;
+use Illuminate\Support\Str;
 
 class MainCategoriesController extends Controller
 {
@@ -151,6 +152,33 @@ class MainCategoriesController extends Controller
             return redirect()->route('admin.maincategories')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
         }
 
+    }
+
+
+    
+    public function destroy($id)
+    {
+
+        try {
+             $maincategory = MainCategory::find($id);
+            if (!$maincategory)
+                return redirect()->route('admin.maincategories')->with(['error' => 'هذا القسم غير موجود ']);
+
+             $vendors = $maincategory->vendors();
+            if (isset($vendors) && $vendors->count() > 0) {
+                return redirect()->route('admin.maincategories')->with(['error' => 'لأ يمكن حذف هذا القسم  ']);
+            }
+
+            $image = Str::after($maincategory->photo, 'assets/');
+            $image = base_path('assets/' . $image);
+            unlink($image); //delete from folder
+
+            $maincategory->delete();
+            return redirect()->route('admin.maincategories')->with(['success' => 'تم حذف القسم بنجاح']);
+
+        } catch (\Exception $ex) {
+            return redirect()->route('admin.maincategories')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
     }
 
 
